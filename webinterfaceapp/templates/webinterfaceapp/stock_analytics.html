@@ -1,0 +1,423 @@
+{% extends "./public/dashboardBase.html" %}
+{% load static %}
+
+{% block main_content %}
+
+
+    <div id="page-wrapper" class="gray-bg">
+
+        {% include 'webinterfaceapp/public/CommonHeadBar.html' %}
+
+        <style type="text/css">
+            @media screen and (max-width: 1400px) and (min-width: 800px) {
+
+            }
+
+            @media screen and (max-width: 2000px) and (min-width: 1401px) {
+
+            }
+        </style>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+                <h2>Home </h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="{% url 'webinterfaceapp:home' %}">Home</a>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'webinterfaceapp:stock_analytics' %}">Stock</a>
+                    </li>
+                    <li class="active">
+                        <a href="{% url 'webinterfaceapp:stock_analytics' %}"><strong>Analytics</strong></a>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-sm-8">
+
+            </div>
+        </div>
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="ibox">
+
+
+                        <div class="ibox-content">
+                            <!-- TradingView Widget BEGIN -->
+                            <div class="tradingview-widget-container">
+                                <div id="tradingview_6a45f"></div>
+                                <div class="tradingview-widget-copyright"><a
+                                        href="https://www.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener"
+                                        target="_blank"><span class="blue-text">Realtime Chart of stocks</span></a>
+                                </div>
+                                <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                                <script type="text/javascript">
+                                    new TradingView.widget(
+                                        {
+                                            "width": 1500,
+                                            "height": 410,
+                                            "symbol": "NASDAQ:AAPL",
+                                            "interval": "D",
+                                            "timezone": "Etc/UTC",
+                                            "theme": "Light",
+                                            "style": "1",
+                                            "locale": "en",
+                                            "toolbar_bg": "#f1f3f6",
+                                            "enable_publishing": false,
+                                            "allow_symbol_change": true,
+                                            "container_id": "tradingview_6a45f"
+                                        }
+                                    );
+                                </script>
+                            </div>
+                            <!-- TradingView Widget END -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+{#        </div>#}
+{##}
+{#        <div class="wrapper wrapper-content animated fadeInRight">#}
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="ibox">
+
+
+                        <div class="ibox-content">
+
+
+                            <!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div id="tv-medium-widget"></div>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/AAPL/" rel="noopener" target="_blank"><span class="blue-text">Apple</span></a>, <a href="https://www.tradingview.com/symbols/GOOGL/" rel="noopener" target="_blank"><span class="blue-text">Google</span></a> <span class="blue-text">and</span> <a href="https://www.tradingview.com/symbols/MSFT/" rel="noopener" target="_blank"><span class="blue-text">Microsoft Quotes</span></a></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script type="text/javascript">
+  new TradingView.MediumWidget(
+  {
+  "container_id": "tv-medium-widget",
+  "symbols": [
+    [
+      "Apple",
+      "AAPL "
+    ],
+    [
+      "Google",
+      "GOOGL"
+    ],
+    [
+      "Microsoft",
+      "MSFT"
+    ]
+  ],
+  "greyText": "Quotes by",
+  "gridLineColor": "#e9e9ea",
+  "fontColor": "#83888D",
+  "underLineColor": "#dbeffb",
+  "trendLineColor": "#4bafe9",
+  "width": "460px",
+  "height": "650px",
+  "locale": "en"
+}
+  );
+  </script>
+</div>
+<!-- TradingView Widget END -->
+
+
+                            {#                            <a href="{% url 'webinterfaceapp:pca' %}" class="btn-link">#}
+                            {#                                <h2>#}
+                            {#                                    Principal Component Analysis#}
+                            {#                                </h2>#}
+                            {#                            </a>#}
+                            {#                            <div class="small m-b-xs">#}
+                            {#                                <span class="text-muted"><i class="fa fa-clock-o"></i>{% now "jS F Y H:i" %}</span>#}
+                            {#                            </div>#}
+                            {#                            <p>#}
+                            {#                                PCA description here.#}
+                            {#                            </p>#}
+                            {#                            <div class="row">#}
+                            {#                                <div class="col-md-6">#}
+                            {#                                    <h5>Need to see:</h5>#}
+                            {#                                    <a class="btn btn-primary btn-xs" href="{% url 'webinterfaceapp:pca' %}"#}
+                            {#                                       type="button">Launch Analytics</a>#}
+                            {#                                </div>#}
+                            {#                                <div class="col-md-6">#}
+                            {#                                    <div class="small text-right">#}
+                            {#                                        <h5>Tags:</h5>#}
+                            {#                                        <div><i class="fa fa-comments-o"> </i> Data Mining</div>#}
+                            {#                                        <i class="fa fa-eye"> </i> Trend Prediction#}
+                            {#                                    </div>#}
+                            {#                                </div>#}
+                            {#                            </div>#}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="ibox">
+
+
+                        <div class="ibox-content">
+
+                            <!-- TradingView Widget BEGIN -->
+                            <div class="tradingview-widget-container">
+                                <div class="tradingview-widget-container__widget"></div>
+                                <div class="tradingview-widget-copyright"><a
+                                        href="https://www.tradingview.com/markets/stocks-usa/" rel="noopener"
+                                        target="_blank"><span class="blue-text">Stock Quotes</span></a></div>
+                                <script type="text/javascript"
+                                        src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js"
+                                        async>
+                                    {
+                                        "gridLineColor"
+                                    :
+                                        "rgba(233, 233, 234, 1)",
+                                            "scaleFontColor"
+                                    :
+                                        "rgba(218, 221, 224, 1)",
+                                            "title"
+                                    :
+                                        "Stocks",
+                                            "tabs"
+                                    :
+                                        [
+                                            {
+                                                "symbols": [
+                                                    {
+                                                        "s": "NYSE:JPM",
+                                                        "d": "Jpmorgan Chase & Co"
+                                                    },
+                                                    {
+                                                        "s": "NYSE:WFC",
+                                                        "d": "Wells Fargo Co New"
+                                                    },
+                                                    {
+                                                        "s": "NYSE:BAC",
+                                                        "d": "Bank Amer Corp"
+                                                    },
+                                                    {
+                                                        "s": "NYSE:HSBC",
+                                                        "d": "Hsbc Hldgs Plc"
+                                                    },
+                                                    {
+                                                        "s": "NYSE:C",
+                                                        "d": "Citigroup Inc"
+                                                    },
+                                                    {
+                                                        "s": "NYSE:MA",
+                                                        "d": "Mastercard Incorporated"
+                                                    }
+                                                ],
+                                                "title": "Financial"
+                                            },
+                                            {
+                                                "symbols": [
+                                                    {
+                                                        "s": "NASDAQ:AAPL",
+                                                        "d": "Apple"
+                                                    },
+                                                    {
+                                                        "s": "NASDAQ:GOOGL",
+                                                        "d": "Google Inc"
+                                                    },
+                                                    {
+                                                        "s": "NASDAQ:MSFT",
+                                                        "d": "Microsoft Corp"
+                                                    },
+                                                    {
+                                                        "s": "NASDAQ:FB",
+                                                        "d": "Facebook Inc"
+                                                    },
+                                                    {
+                                                        "s": "NYSE:ORCL",
+                                                        "d": "Oracle Corp"
+                                                    },
+                                                    {
+                                                        "s": "NASDAQ:INTC",
+                                                        "d": "Intel Corp"
+                                                    }
+                                                ],
+                                                "title": "Technology"
+                                            },
+                                            {
+                                                "symbols": [
+                                                    {
+                                                        "s": "NASDAQ:AMZN",
+                                                        "d": "Amazon Com Inc"
+                                                    },
+                                                    {
+                                                        "s": "NYSE:BABA",
+                                                        "d": "Alibaba Group Hldg Ltd"
+                                                    },
+                                                    {
+                                                        "s": "NYSE:T",
+                                                        "d": "At&t Inc"
+                                                    },
+                                                    {
+                                                        "s": "NYSE:WMT",
+                                                        "d": "Wal-mart Stores Inc"
+                                                    },
+                                                    {
+                                                        "s": "NYSE:CHL",
+                                                        "d": "China Mobile Limited"
+                                                    },
+                                                    {
+                                                        "s": "NYSE:V",
+                                                        "d": "Visa Inc"
+                                                    }
+                                                ],
+                                                "title": "Services"
+                                            }
+                                        ],
+                                            "plotLineColorFalling"
+                                    :
+                                        "rgba(255, 74, 104, 1)",
+                                            "plotLineColorGrowing"
+                                    :
+                                        "rgba(60, 188, 152, 1)",
+                                            "showChart"
+                                    :
+                                        true,
+                                            "height"
+                                    :
+                                        650,
+                                            "locale"
+                                    :
+                                        "en",
+                                            "symbolActiveColor"
+                                    :
+                                        "rgba(242, 250, 254, 1)",
+                                            "belowLineFillColorFalling"
+                                    :
+                                        "rgba(255, 74, 104, 0.05)",
+                                            "belowLineFillColorGrowing"
+                                    :
+                                        "rgba(60, 188, 152, 0.05)",
+                                            "width"
+                                    :
+                                        460
+                                    }
+                                </script>
+                            </div>
+                            <!-- TradingView Widget END -->
+
+
+                            {#                            <a href="{% url 'webinterfaceapp:pca' %}" class="btn-link">#}
+                            {#                                <h2>#}
+                            {#                                    Principal Component Analysis#}
+                            {#                                </h2>#}
+                            {#                            </a>#}
+                            {#                            <div class="small m-b-xs">#}
+                            {#                                <span class="text-muted"><i class="fa fa-clock-o"></i>{% now "jS F Y H:i" %}</span>#}
+                            {#                            </div>#}
+                            {#                            <p>#}
+                            {#                                PCA description here.#}
+                            {#                            </p>#}
+                            {#                            <div class="row">#}
+                            {#                                <div class="col-md-6">#}
+                            {#                                    <h5>Need to see:</h5>#}
+                            {#                                    <a class="btn btn-primary btn-xs" href="{% url 'webinterfaceapp:pca' %}"#}
+                            {#                                       type="button">Launch Analytics</a>#}
+                            {#                                </div>#}
+                            {#                                <div class="col-md-6">#}
+                            {#                                    <div class="small text-right">#}
+                            {#                                        <h5>Tags:</h5>#}
+                            {#                                        <div><i class="fa fa-comments-o"> </i> Data Mining</div>#}
+                            {#                                        <i class="fa fa-eye"> </i> Trend Prediction#}
+                            {#                                    </div>#}
+                            {#                                </div>#}
+                            {#                            </div>#}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="ibox">
+
+
+                        <div class="ibox-content">
+
+                            <!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/markets/currencies/forex-heat-map/" rel="noopener" target="_blank"><span class="blue-text">Forex Heat Map</span></a></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-heat-map.js" async>
+  {
+  "width": "460",
+  "height": "650",
+  "currencies": [
+    "EUR",
+    "USD",
+    "JPY",
+    "GBP",
+    "CHF",
+    "AUD",
+    "CAD",
+    "NZD",
+    "CNY"
+  ],
+  "locale": "en"
+}
+  </script>
+</div>
+<!-- TradingView Widget END -->
+
+
+                            {#                            <a href="{% url 'webinterfaceapp:pca' %}" class="btn-link">#}
+                            {#                                <h2>#}
+                            {#                                    Principal Component Analysis#}
+                            {#                                </h2>#}
+                            {#                            </a>#}
+                            {#                            <div class="small m-b-xs">#}
+                            {#                                <span class="text-muted"><i class="fa fa-clock-o"></i>{% now "jS F Y H:i" %}</span>#}
+                            {#                            </div>#}
+                            {#                            <p>#}
+                            {#                                PCA description here.#}
+                            {#                            </p>#}
+                            {#                            <div class="row">#}
+                            {#                                <div class="col-md-6">#}
+                            {#                                    <h5>Need to see:</h5>#}
+                            {#                                    <a class="btn btn-primary btn-xs" href="{% url 'webinterfaceapp:pca' %}"#}
+                            {#                                       type="button">Launch Analytics</a>#}
+                            {#                                </div>#}
+                            {#                                <div class="col-md-6">#}
+                            {#                                    <div class="small text-right">#}
+                            {#                                        <h5>Tags:</h5>#}
+                            {#                                        <div><i class="fa fa-comments-o"> </i> Data Mining</div>#}
+                            {#                                        <i class="fa fa-eye"> </i> Trend Prediction#}
+                            {#                                    </div>#}
+                            {#                                </div>#}
+                            {#                            </div>#}
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        {#        {% include 'webinterfaceapp/public/CommonFooter.html' %}#}
+
+    </div>
+
+
+    <script>
+        var MAGICFIGURE = 49.993;
+        $(document).ready(function () {
+            WinMove();
+
+        });
+
+
+    </script>
+
+{% endblock %}

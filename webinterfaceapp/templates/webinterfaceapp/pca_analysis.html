@@ -1,0 +1,626 @@
+{% extends "./public/dashboardBase.html" %}
+{% load static %}
+
+{% block main_content %}
+
+    <div id="page-wrapper" class="gray-bg">
+
+        {% include 'webinterfaceapp/public/CommonHeadBar.html' %}
+
+        <style type="text/css">
+            @media screen and (max-width: 1400px) and (min-width: 800px) {
+
+            }
+
+            @media screen and (max-width: 2000px) and (min-width: 1401px) {
+
+            }
+
+            #loading {
+                position: fixed;
+                margin: 0 auto;
+                width: 20%;
+                z-index: 15;
+                top: 50%;
+                left: 40%;
+            }
+
+            .widget {
+                margin-bottom: 0px;
+                margin-top: 0px;
+            }
+
+            #sentiment_trend_id {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+                <h2>Home </h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="{% url 'webinterfaceapp:home' %}">Home</a>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'webinterfaceapp:home' %}">PCA</a>
+                    </li>
+                    <li class="active">
+                        <a href="{% url 'webinterfaceapp:pca' %}"><strong>Analysis</strong></a>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-sm-8">
+
+            </div>
+        </div>
+
+        {#  Start: Loader for showing the progress of data collection process#}
+        <div class="col-md-2" id="loading">
+            <div class="ibox-content text-center" style="border: 1px dotted;">
+                <div class="spiner-example" style="height: 50px; padding-top: 10px">
+                    <div class="sk-spinner sk-spinner-three-bounce">
+                        <div class="sk-bounce1"></div>
+                        <div class="sk-bounce2"></div>
+                        <div class="sk-bounce3"></div>
+                    </div>
+                </div>
+                <h5 id="set_status">Process Started</h5>
+            </div>
+        </div>
+        {#  End:  Loader for showing the progress of data collection process#}
+
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+
+            {#  Start :: Top Row containing search text box and positive negative neutral hit count#}
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Principal Component Analysis Service</h5>
+
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config 1</a>
+                                    </li>
+                                    <li><a href="#">Config 2</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                    <div class="form-group row">
+
+                                        <label class="col-md-2  control-label">Type</label>
+                                        <div class="col-md-10">
+                                            <select class="form-control m-b" name="SearchingCriteria" id="select_box">
+                                                <option value="0" selected>Select</option>
+                                                <option value="1" {% if result.SearchingCriteria == 1 %}
+                                                        selected{% endif %} >Twitter
+                                                </option>
+                                                <option value="2" {% if result.SearchingCriteria == 2 %}
+                                                        selected{% endif %} >News
+                                                </option>
+                                                <option value="3" {% if result.SearchingCriteria == 3 %}
+                                                        selected{% endif %} >Stock Market
+                                                </option>
+                                                <option value="4" {% if result.SearchingCriteria == 4 %}
+                                                        selected{% endif %} >Facebook
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" id="twitter-selected">
+                                        <label class="col-md-2  control-label">Search using text</label>
+                                        <div class="col-md-10">
+                                            <input type="text" name="twitter-text" id="twitter-text"
+                                                   placeholder="Enter location (Optional)" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" id="twitter-selected-location">
+                                        <label class="col-md-2  control-label">Search using location</label>
+                                        <div class="col-md-10">
+                                            <input type="text" name="twitter-text" id="twitter-text-location"
+                                                   placeholder="Enter location (Optional)" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" id="stock-selected">
+                                        <label class="col-md-2  control-label">Stock</label>
+                                        <div class="col-md-10">
+                                            <select class="form-control m-b" name="SearchingCriteria" id="stock-select_box">
+                                                <option value="MSFT" selected>Microsoft</option>
+                                                <option value="AAPL" {% if result.SearchingCriteria == 1 %}
+                                                        selected{% endif %} >APPLE
+                                                </option>
+                                                <option value="GOOG" {% if result.SearchingCriteria == 2 %}
+                                                        selected{% endif %} >GOOGLE
+                                                </option>
+                                                <option value="AMZN" {% if result.SearchingCriteria == 3 %}
+                                                        selected{% endif %} >AMAZON
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" id="facebook-selected">
+                                        <label class="col-md-2  control-label">Search using text</label>
+                                        <div class="col-md-10">
+                                            <input type="text" name="twitter-text" id="facebook-text"
+                                                   placeholder="Enter text (Optional)" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row pull-right">
+                                            <div class="col-md-12">
+                                                <div class="col-md-6">
+                                                    <button id="start_analysis"
+                                                            class="btn btn-primary pull-right m-t-n-xs"
+                                                            name="crawl">Start
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button class="btn btn-primary pull-right m-t-n-xs" name="crawl"
+                                                            id="stop_analysis">Stop
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Search Result </h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="liveTableData">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th class="col-md-3 col-xs-3 col-lg-3">result</th>
+
+                                    </tr>
+                                    </thead>
+
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="custom-charts">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Bubble Chart</h5>
+
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config 1</a>
+                                    </li>
+                                    <li><a href="#">Config 2</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <center>
+                                        <div id="bubbleChart"></div>
+                                    </center>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Doughnut Chart</h5>
+
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config 1</a>
+                                    </li>
+                                    <li><a href="#">Config 2</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    {#                                    <div id="pieChart"></div>#}
+                                    {#                                    <div id="doughnutChart"></div>#}
+                                    <canvas id="doughnutChart" width="800" height="450"></canvas>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+{#        {% include 'webinterfaceapp/public/CommonFooter.html' %}#}
+
+    </div>
+
+    <script>
+
+
+        $(document).ready(function () {
+
+            $('#custom-charts').hide();
+
+            document.getElementById("twitter-selected").style.display = "none";
+            document.getElementById("twitter-selected-location").style.display = "none";
+            document.getElementById("stock-selected").style.display = "none";
+            document.getElementById("facebook-selected").style.display = "none";
+
+            $('#select_box').change(function ()
+            {
+                var OptionValue = document.getElementById("select_box").value;
+
+                console.log(OptionValue);
+
+
+                if(OptionValue == 1){
+                     document.getElementById("twitter-selected").style.display = "block";
+                     document.getElementById("twitter-selected-location").style.display = "block";
+                     document.getElementById("stock-selected").style.display = "none";
+                     document.getElementById("facebook-selected").style.display = "none";
+                }else if(OptionValue == 3){
+                     document.getElementById("stock-selected").style.display = "block";
+                     document.getElementById("twitter-selected").style.display = "none";
+                     document.getElementById("twitter-selected-location").style.display = "none";
+                     document.getElementById("facebook-selected").style.display = "none";
+                }else if(OptionValue == 4){
+                     document.getElementById("stock-selected").style.display = "none";
+                     document.getElementById("twitter-selected").style.display = "none";
+                     document.getElementById("twitter-selected-location").style.display = "none";
+                     document.getElementById("facebook-selected").style.display = "block";
+                }
+                else{
+                     document.getElementById("twitter-selected").style.display = "none";
+                     document.getElementById("twitter-selected-location").style.display = "none";
+                     document.getElementById("stock-selected").style.display = "none";
+                     document.getElementById("facebook-selected").style.display = "none";
+                 }
+            });
+
+
+
+
+
+
+            InitializeUI();
+
+            bubbleSvg = initializeBubbleChart();
+            {#pieSvg = initializePieChart();#}
+
+
+            $('#start_analysis').click(function () {
+                var value = $('#select_box').val();
+                console.log(value);
+
+                if (value === "1") {
+                    console.log("twitter");
+                    GetAjaxResult("twitter");
+                }
+                else if(value === "2"){
+                    console.log("news");
+                    GetAjaxResult("news");
+                }
+                else if(value === "3"){
+                    console.log("stock");
+                    GetAjaxResult("stock");
+                }
+                else if(value === "4"){
+                    console.log("facebook");
+                    GetAjaxResult("facebook");
+                }
+                else {
+                    console.log("Others");
+                }
+
+            });
+
+            var itemCollected = 0;
+            var crawlCounter = 1;
+            var index = 0, historyKey = '';
+            var timerTwitter;
+            var timerNews;
+            var timerStock;
+            var timerFacebook;
+
+            function twitter_result(){
+                var key = $('#twitter-text').val();
+                console.log(key);
+                var text = {
+                    'key' : key
+                };
+                timerTwitter = setInterval(function () {
+                    $.ajax({
+                        url: "{% url 'webinterfaceapp:twitter' %}",
+                        type: 'GET',
+                        dataType: 'json',
+                        data: text,
+                        success: function (data) {
+                            console.log(data);
+                            if (data.status) {
+                                AppendToDataTable(data.words);
+
+                                _data = {"children": data.word_list};
+
+                                bubbleChart(_data, bubbleSvg);
+
+                                doughnutChartCustom(data.word_list);
+
+                            }
+
+                        }
+                    });
+                }, 10000);
+            }
+
+            function facebook_result(){
+                var key = $('#facebook-text').val();
+                console.log(key);
+                var text = {
+                    'key' : key
+                };
+                timerFacebook = setInterval(function () {
+                    $.ajax({
+                        url: "{% url 'webinterfaceapp:twitter' %}",
+                        type: 'GET',
+                        dataType: 'json',
+                        data: text,
+                        success: function (data) {
+                            console.log(data);
+                            if (data.status) {
+                                AppendToDataTable(data.words);
+
+                                _data = {"children": data.word_list};
+
+                                bubbleChart(_data, bubbleSvg);
+
+                                doughnutChartCustom(data.word_list);
+
+                            }
+
+                        }
+                    });
+                }, 10000);
+            }
+
+            function news_result(){
+                timerNews = setInterval(function () {
+                    $.ajax({
+                        url: "{% url 'webinterfaceapp:news' %}",
+                        type: 'GET',
+                        dataType: 'json',
+
+                        success: function (data) {
+                            console.log(data);
+                            if (data.status) {
+                                AppendToDataTable(data.words);
+
+                                _data = {"children": data.word_list};
+
+                                bubbleChart(_data, bubbleSvg);
+
+                                doughnutChartCustom(data.word_list);
+
+                            }
+
+                        }
+                    });
+                }, 10000);
+            }
+
+            function stock_result(){
+                var value = $('#stock-select_box').val();
+                console.log(value);
+                var text = {
+                    'key' : value
+                };
+                $.ajax({
+                        url: "{% url 'webinterfaceapp:stock' %}",
+                        type: 'GET',
+                        dataType: 'json',
+                        data: text,
+                        success: function (data) {
+                            console.log(data);
+                            if (data.status) {
+                                AppendToDataTableStock(data);
+
+                                {#_data = {"children": data.word_list};#}
+
+                                {#bubbleChart(_data, bubbleSvg);#}
+                                {##}
+                                {#doughnutChartCustom(data.word_list);#}
+
+                            }
+
+                        }
+                    });
+
+            }
+
+
+            function GetAjaxResult(option) {
+
+                $("#loading").show();
+                $('#set_status').html("Processing Started...");
+                $("#stop_analysis").prop("disabled", false);
+                $("#start_analysis").prop("disabled", true);
+
+
+                if(option === "twitter"){
+                    $('#custom-charts').show();
+                    twitter_result();
+                }else if(option === "news"){
+                    $('#custom-charts').show();
+                    news_result();
+                }else if(option === "stock"){
+                    $("#liveTableData > tbody > tr ").remove();
+                    $('#custom-charts').hide();
+                    stock_result();
+                }else if(option === "facebook"){
+                    $("#liveTableData > tbody > tr ").remove();
+                    $('#custom-charts').hide();
+                    facebook_result();
+                }
+
+            }
+
+            $('#stop_analysis').click(function () {
+                Stop();
+                $.ajax({
+                    url: "{% url 'webinterfaceapp:stop' %}",
+                    data: 'source=twitter',
+                    type: 'GET',
+                    success: function (data) {
+                        if (data.status) {
+                            console.log("procssing stopped successfully");
+                        } else {
+                            console.log("processing cannot be stopped.");
+                        }
+
+                    }
+                });
+            });
+
+            function Stop() {
+                $("#loading").hide();
+                $("#start_analysis").prop("disabled", false);
+                $("#stop_analysis").prop("disabled", true);
+                clearInterval(timerTwitter);
+                clearInterval(timerNews);
+                clearInterval(timerStock);
+                clearInterval(timerFacebook);
+            }
+
+            function InitializeUI() {
+                $("#loading").hide();
+                $("#liveTableData > tbody").html("");
+
+                $('#set_status').html("Twitter Crawling Not Started...");
+                //$("#start").prop("disabled", true);
+                $("#stop_analysis").prop("disabled", true);
+                index = 0;
+                historyKey = '';
+
+            }
+
+            function AppendToDataTable(obj) {
+                var tableRow;
+                $("#liveTableData > tbody > tr ").remove();
+                for (var i = 0; i < obj.length; i++) {
+                    if (obj[i] !== "" && typeof (obj[i]) != 'undefined') {
+                        var resultData = obj[i];
+                        var index = i + 1;
+
+                        tableRow = "<tr><td>" + String(index) + "</td><td>" + String(resultData) + "</td><tr>";
+
+                        $("#liveTableData > tbody").append(tableRow);
+
+                    }
+                }
+
+            }
+
+            function AppendToDataTableStock(obj) {
+                var tableRow;
+                $("#liveTableData > tbody > tr ").remove();
+
+                var dt = obj.datetime;
+                var dim = obj.dim;
+
+                for (var i = 0; i < dim.length; i++) {
+                    if (dim[i] !== "" && typeof (dim[i]) != 'undefined') {
+                        var resultDim = dim[i];
+                        var resultDT = dt[i];
+                        var index = i + 1;
+
+                        tableRow = "<tr><td>" + String(resultDT) + "</td><td>" + String(resultDim) + "</td><tr>";
+
+                        $("#liveTableData > tbody").append(tableRow);
+
+                    }
+                }
+
+            }
+
+        });
+
+
+    </script>
+
+
+
+{% endblock %}

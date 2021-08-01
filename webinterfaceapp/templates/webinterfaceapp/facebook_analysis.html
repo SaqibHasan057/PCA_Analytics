@@ -1,0 +1,429 @@
+{% extends "./public/dashboardBase.html" %}
+{% load static %}
+
+{% block main_content %}
+
+    <div id="page-wrapper" class="gray-bg">
+
+        {% include 'webinterfaceapp/public/CommonHeadBar.html' %}
+
+        <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.2';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+        <style type="text/css">
+            @media screen and (max-width: 1400px) and (min-width: 800px) {
+
+            }
+
+            @media screen and (max-width: 2000px) and (min-width: 1401px) {
+
+            }
+
+            #loading {
+                position: fixed;
+                margin: 0 auto;
+                width: 20%;
+                z-index: 15;
+                top: 50%;
+                left: 40%;
+            }
+
+            .widget {
+                margin-bottom: 0px;
+                margin-top: 0px;
+            }
+
+            #sentiment_trend_id {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-auto-logout-link="true" data-use-continue-as="false"></div>
+            <div class="col-sm-4">
+                <h2>Home </h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="{% url 'webinterfaceapp:home' %}">Home</a>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'webinterfaceapp:facebook_analytics' %}">Facebook</a>
+                    </li>
+                    <li class="active">
+                        <a href="{% url 'webinterfaceapp:facebook_analysis' %}"><strong>Analysis</strong></a>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-sm-8">
+
+            </div>
+        </div>
+
+        {#  Start: Loader for showing the progress of data collection process#}
+        <div class="col-md-2" id="loading">
+            <div class="ibox-content text-center" style="border: 1px dotted;">
+                <div class="spiner-example" style="height: 50px; padding-top: 10px">
+                    <div class="sk-spinner sk-spinner-three-bounce">
+                        <div class="sk-bounce1"></div>
+                        <div class="sk-bounce2"></div>
+                        <div class="sk-bounce3"></div>
+                    </div>
+                </div>
+                <h5 id="set_status">Process Started</h5>
+            </div>
+        </div>
+        {#  End:  Loader for showing the progress of data collection process#}
+
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+
+            {#  Start :: Top Row containing search text box and positive negative neutral hit count#}
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Principal Component Analysis Service</h5>
+
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config 1</a>
+                                    </li>
+                                    <li><a href="#">Config 2</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                    <div class="form-group row" id="twitter-selected">
+                                        <label class="col-md-2  control-label">Search using text</label>
+                                        <div class="col-md-10">
+                                            <input type="text" name="twitter-text" id="facebook-text"
+                                                   placeholder="Enter text (Optional)" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row pull-right">
+                                        <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <button id="start_analysis"
+                                                        class="btn btn-primary pull-right m-t-n-xs"
+                                                        name="crawl">Start
+                                                </button>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <button class="btn btn-primary pull-right m-t-n-xs" name="crawl"
+                                                        id="stop_analysis">Stop
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Search Result </h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="liveTableData">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th class="col-md-3 col-xs-3 col-lg-3">result</th>
+
+                                    </tr>
+                                    </thead>
+
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="custom-charts">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Bubble Chart</h5>
+
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config 1</a>
+                                    </li>
+                                    <li><a href="#">Config 2</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <center>
+                                        <div id="bubbleChart"></div>
+                                    </center>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Doughnut Chart</h5>
+
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config 1</a>
+                                    </li>
+                                    <li><a href="#">Config 2</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    {#                                    <div id="pieChart"></div>#}
+                                    {#                                    <div id="doughnutChart"></div>#}
+                                    <canvas id="doughnutChart" width="800" height="450"></canvas>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+{#        {% include 'webinterfaceapp/public/CommonFooter.html' %}#}
+
+    </div>
+
+    <script>
+
+
+        $(document).ready(function () {
+
+
+            InitializeUI();
+
+            bubbleSvg = initializeBubbleChart();
+
+
+            $('#start_analysis').click(function () {
+
+
+                console.log("facebook");
+                GetAjaxResult("facebook");
+
+
+            });
+
+            var itemCollected = 0;
+            var crawlCounter = 1;
+            var index = 0, historyKey = '';
+            var timerTwitter;
+            var timerNews;
+            var timerStock;
+            var timerFacebook;
+
+
+            function facebook_result(){
+                var key = $('#facebook-text').val();
+                console.log(key);
+                var text = {
+                    'key' : key
+                };
+                timerTwitter = setInterval(function () {
+                    $.ajax({
+                        url: "{% url 'webinterfaceapp:twitter' %}",
+                        type: 'GET',
+                        dataType: 'json',
+                        data: text,
+                        success: function (data) {
+                            console.log(data);
+                            if (data.status) {
+                                AppendToDataTable(data.words);
+
+                                _data = {"children": data.word_list};
+
+                                bubbleChart(_data, bubbleSvg);
+
+                                doughnutChartCustom(data.word_list);
+
+                            }
+
+                        }
+                    });
+                }, 10000);
+            }
+
+
+
+
+
+            function GetAjaxResult(option) {
+
+                $("#loading").show();
+                $('#set_status').html("Processing Started...");
+                $("#stop_analysis").prop("disabled", false);
+                $("#start_analysis").prop("disabled", true);
+
+                $('#custom-charts').show();
+                facebook_result();
+
+
+
+            }
+
+            $('#stop_analysis').click(function () {
+                Stop();
+                $.ajax({
+                    url: "{% url 'webinterfaceapp:stop' %}",
+                    data: 'source=twitter',
+                    type: 'GET',
+                    success: function (data) {
+                        if (data.status) {
+                            console.log("procssing stopped successfully");
+                        } else {
+                            console.log("processing cannot be stopped.");
+                        }
+
+                    }
+                });
+            });
+
+            function Stop() {
+                $("#loading").hide();
+                $("#start_analysis").prop("disabled", false);
+                $("#stop_analysis").prop("disabled", true);
+
+                clearInterval(timerFacebook);
+            }
+
+            function InitializeUI() {
+                $("#loading").hide();
+                $("#liveTableData > tbody").html("");
+
+                $('#set_status').html("Twitter Crawling Not Started...");
+                //$("#start").prop("disabled", true);
+                $("#stop_analysis").prop("disabled", true);
+                index = 0;
+                historyKey = '';
+
+            }
+
+            function AppendToDataTable(obj) {
+                var tableRow;
+                $("#liveTableData > tbody > tr ").remove();
+                for (var i = 0; i < obj.length; i++) {
+                    if (obj[i] !== "" && typeof (obj[i]) != 'undefined') {
+                        var resultData = obj[i];
+                        var index = i + 1;
+
+                        tableRow = "<tr><td>" + String(index) + "</td><td>" + String(resultData) + "</td><tr>";
+
+                        $("#liveTableData > tbody").append(tableRow);
+
+                    }
+                }
+
+            }
+
+            function AppendToDataTableStock(obj) {
+                var tableRow;
+                $("#liveTableData > tbody > tr ").remove();
+
+                var dt = obj.datetime;
+                var dim = obj.dim;
+
+                for (var i = 0; i < dim.length; i++) {
+                    if (dim[i] !== "" && typeof (dim[i]) != 'undefined') {
+                        var resultDim = dim[i];
+                        var resultDT = dt[i];
+                        var index = i + 1;
+
+                        tableRow = "<tr><td>" + String(resultDT) + "</td><td>" + String(resultDim) + "</td><tr>";
+
+                        $("#liveTableData > tbody").append(tableRow);
+
+                    }
+                }
+
+            }
+
+        });
+
+
+    </script>
+
+
+
+{% endblock %}

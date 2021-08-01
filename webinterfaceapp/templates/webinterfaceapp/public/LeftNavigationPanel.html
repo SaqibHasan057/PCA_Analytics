@@ -1,0 +1,127 @@
+{% load static %}
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element"> <span>
+                            <img alt="image" class="img-rounded"
+                                 src="{% static "img/logo.png" %}" width="150px" height="50px"/>
+                             </span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs"> <strong
+                                    class="font-bold">Dr. Muhammad Abdullah Adnan</strong>
+                             </span> <span class="text-muted text-xs block">Assistant Professor<b
+                                    class="caret"></b></span> </span> </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="profile.html">Developer</a></li>
+                        <li><a href="contacts.html">Worker</a></li>
+                        <li><a href="mailbox.html">Service Holder</a></li>
+                        <li class="divider"></li>
+                        <li><a href="login.html">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    PCA
+                </div>
+            </li>
+
+            <li class="{% if request.resolver_match.url_name == "home" or request.resolver_match.url_name == "pca" %}active{% endif %}">
+{#                <a href="{% url 'webinterfaceapp:home' %}"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Dashboard</span></a>#}
+                <a href="{% url 'webinterfaceapp:home' %}"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li class="{% if request.resolver_match.url_name == "home" %}active{% endif %}"><a href="{% url 'webinterfaceapp:home' %}">Home</a></li>
+                    <li class="{% if request.resolver_match.url_name == "pca" %}active{% endif %}"><a href="{% url 'webinterfaceapp:pca' %}">PCA</a></li>
+
+
+                </ul>
+            </li>
+
+            <li class="{% if request.resolver_match.url_name == "twitter_analytics" or request.resolver_match.url_name == "twitter_analysis"  %}active{% endif %}">
+{#                <a href="#"><i class="fa fa-globe"></i> <span class="nav-label">Twitter Analysis</span></a>#}
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Twitter Analysis</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li class="{% if request.resolver_match.url_name == "twitter_analytics" %}active{% endif %}"><a href="{% url 'webinterfaceapp:twitter_analytics' %}">Analytics</a></li>
+                    <li class="{% if request.resolver_match.url_name == "twitter_analysis" %}active{% endif %}"><a href="{% url 'webinterfaceapp:twitter_analysis' %}">PCA</a></li>
+                </ul>
+            </li>
+            <li class="{% if request.resolver_match.url_name == "news_analytics" or request.resolver_match.url_name == "news_analysis"  %}active{% endif %}">
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">News Analysis</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li class="{% if request.resolver_match.url_name == "news_analytics" %}active{% endif %}"><a href="{% url 'webinterfaceapp:news_analytics' %}">Analytics</a></li>
+                    <li class="{% if request.resolver_match.url_name == "news_analysis" %}active{% endif %}"><a href="{% url 'webinterfaceapp:news_analysis' %}">PCA</a></li>
+                </ul>
+            </li>
+            <li class="{% if request.resolver_match.url_name == "stock_analytics" or request.resolver_match.url_name == "stock_analysis"  %}active{% endif %}">
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Stock Market Analysis</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li class="{% if request.resolver_match.url_name == "stock_analytics" %}active{% endif %}"><a href="{% url 'webinterfaceapp:stock_analytics' %}">Analytics</a></li>
+                    <li class="{% if request.resolver_match.url_name == "stock_analysis" %}active{% endif %}"><a href="{% url 'webinterfaceapp:stock_analysis' %}">PCA</a></li>
+                </ul>
+            </li>
+            <li class="{% if request.resolver_match.url_name == "facebook_analytics" or request.resolver_match.url_name == "facebook_analysis"  %}active{% endif %}">
+{#                <a href="#"><i class="fa fa-globe"></i> <span class="nav-label">Twitter Analysis</span></a>#}
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Facebook Analysis</span> <span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li class="{% if request.resolver_match.url_name == "facebook_analytics" %}active{% endif %}"><a href="{% url 'webinterfaceapp:facebook_analytics' %}">Analytics</a></li>
+                    <li class="{% if request.resolver_match.url_name == "facebook_analysis" %}active{% endif %}"><a href="{% url 'webinterfaceapp:facebook_analysis' %}">PCA</a></li>
+                </ul>
+            </li>
+            <li class="{% if request.resolver_match.url_name == "google_search_trend" %}active{% endif %}">
+                <a href="{% url 'webinterfaceapp:google_search_trend' %}"><i class="fa fa-globe"></i> <span class="nav-label">Search Trend</span></a>
+            </li>
+            <li class="{% if request.resolver_match.url_name == "about_us" %}active{% endif %}">
+                <a href="{% url 'webinterfaceapp:about_us' %}"><i class="fa fa-globe"></i> <span class="nav-label">About Us</span></a>
+            </li>
+            <li class="{% if request.resolver_match.url_name == "contact_us" %}active{% endif %}">
+                <a href="{% url 'webinterfaceapp:contact_us' %}"><i class="fa fa-globe"></i> <span class="nav-label">Contact Us</span></a>
+            </li>
+
+
+        <li class="nav-header " style="background: white!important">
+                <div class="dropdown">
+{#                    <span>#}
+{#                            <img alt="image" class="img-circle"#}
+{#                                 src="{% static "DashboardComponents/img/profile_small.jpg" %}"/>#}
+{#                             </span>#}
+{#                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">#}
+{#                            <span class="clear"> <span class="block m-t-xs"> <strong#}
+{#                                    class="font-bold">Dr. Muhammad Abdullah Adnan</strong>#}
+{#                             </span> <span class="text-muted text-xs block">Assistant Professor<b#}
+{#                                    class="caret"></b></span> </span> </a>#}
+{#                    <ul class="dropdown-menu animated fadeInRight m-t-xs">#}
+{#                        <li><a href="profile.html">Developer</a></li>#}
+{#                        <li><a href="contacts.html">Worker</a></li>#}
+{#                        <li><a href="mailbox.html">Service Holder</a></li>#}
+{#                        <li class="divider"></li>#}
+{#                        <li><a href="login.html">Logout</a></li>#}
+{#                    </ul>#}
+
+<div  >
+    <div style="width: 110%">
+        <strong>Funded By ICTD, BANGLADESH</strong>  <img src="{% static "img/ict.png" %}" width="175" height="150"/> <img src="{% static "img/bd.png" %}" width="175" height="150"/>
+    </div>
+</div>
+                </div>
+                <div class="logo-element">
+                    PCA
+                </div>
+            </li>
+
+
+        </ul>
+
+
+    </div>
+
+{#<div class="footer text-center" >#}
+{#    <div>#}
+{#        <strong>Funded By ICTD, BANGLADESH</strong>  <img src="{% static "img/ict.png" %}" width="100" height="100"/> <img src="{% static "img/bd.png" %}" width="100" height="100"/>#}
+{#    </div>#}
+{#</div>#}
+
+</nav>

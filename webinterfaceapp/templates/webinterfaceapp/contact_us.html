@@ -1,0 +1,95 @@
+{% extends "./public/dashboardBase.html" %}
+{% load static %}
+
+{% block main_content %}
+
+
+    <div id="page-wrapper" class="gray-bg">
+
+        {% include 'webinterfaceapp/public/CommonHeadBar.html' %}
+
+
+        <style type="text/css">
+            @media screen and (max-width: 1400px) and (min-width: 800px) {
+
+            }
+
+            @media screen and (max-width: 2000px) and (min-width: 1401px) {
+
+            }
+        </style>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+                <h2>Home </h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li class="active">
+                        <strong>Contact us</strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-sm-8">
+
+            </div>
+        </div>
+
+
+        <div class="wrapper wrapper-content">
+            <div class="text-center animated fadeInRightBig">
+                <h2 class="font-bold">Contact:</h2>
+                <div class="error-desc">
+                    <p style="font-size:17px">
+                        <strong>Dr. Muhammad Abdullah Adnan</strong><br>
+                        Assistant Professor<br>
+                        Room No: 311<br>
+                        Department of Computer Science and Engineering<br>
+                        Bangladesh University of Engineering and Technology<br>
+                        Dhaka 1000, Bangladesh <br>
+                        <br><br>
+                        Email: <br>
+                        abdullah.adnan@gmail.com, adnan@cse.buet.ac.bd<br>
+                        <br><br>
+                        Telephone: <br>
+                        Office: 880 2 9665650/7109<br>
+                        Cell: 880 1552336926<br>
+                        Residence: 880 2 9665650/7423<br>
+                        <br><br>
+                        <a href="https://sites.google.com/site/abdullahadnan">Visit my page.</a><br>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="pull-right">
+                10GB of <strong>250GB</strong> Free.
+            </div>
+            <div>
+                <strong>Copyright</strong> Example Company &copy; 2014-2017
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+    </div>
+
+
+    <!-- Mainly scripts -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="js/inspinia.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+
+{% endblock %}

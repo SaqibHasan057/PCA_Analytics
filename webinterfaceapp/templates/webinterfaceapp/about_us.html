@@ -1,0 +1,90 @@
+{% extends "./public/dashboardBase.html" %}
+{% load static %}
+
+{% block main_content %}
+
+
+    <div id="page-wrapper" class="gray-bg">
+
+        {% include 'webinterfaceapp/public/CommonHeadBar.html' %}
+
+
+        <style type="text/css">
+            @media screen and (max-width: 1400px) and (min-width: 800px) {
+
+            }
+
+            @media screen and (max-width: 2000px) and (min-width: 1401px) {
+
+            }
+        </style>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+                <h2>Home </h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li class="active">
+                        <strong>About us</strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-sm-8">
+
+            </div>
+        </div>
+
+        <div class="wrapper wrapper-content">
+            <div class="text-center animated fadeInRightBig">
+                <h2 class="font-bold">About Us</h2>
+                <div class="error-desc">
+                    <p style="font-size:17px">
+                        Social media, news portals and stock market are some of the most important
+                        institutions of a modern society. Gaining valuable insights from vast
+                        data generated from such online sources can be a formidable challenge.
+                        <strong>PCA Analytics</strong> is a Data Analytics web application for the ICT Division, under the
+                        Government of the People’s Republic of Bangladesh. Our goal is to perform real
+                        time data analysis on streaming data from social media, news media and the stock
+                        market. We developed a novel, cutting-edge, scalable data engineering technique
+                        that utilizes existing data sources to present statistical analytic content, and
+                        extract data insights across different platforms. This allows us to monitor and
+                        generate actionable insights to better understand the real time behavior of social
+                        media, news portals and stock market.
+                    </p>
+                </div>
+                 <img src="{% static "img/aboutus2.png" %}" width="850" height="150"/>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="pull-right">
+                10GB of <strong>250GB</strong> Free.
+            </div>
+            <div>
+                <strong>Copyright</strong> Example Company &copy; 2014-2017
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <!-- {% include 'webinterfaceapp/public/CommonFooter.html' %}-->
+
+    </div>
+
+
+    <!-- Mainly scripts -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="js/inspinia.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+
+{% endblock %}

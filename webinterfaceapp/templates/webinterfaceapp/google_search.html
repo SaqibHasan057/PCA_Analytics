@@ -1,0 +1,349 @@
+{% extends "./public/dashboardBase.html" %}
+{% load static %}
+
+{% block main_content %}
+
+    <script type="text/javascript"
+            src="https://ssl.gstatic.com/trends_nrtr/1709_RC01/embed_loader.js"
+            xmlns="http://www.w3.org/1999/html"></script>
+
+    <div id="page-wrapper" class="gray-bg">
+
+        {% include 'webinterfaceapp/public/CommonHeadBar.html' %}
+
+        <style type="text/css">
+            @media screen and (max-width: 1400px) and (min-width: 800px) {
+
+            }
+
+            @media screen and (max-width: 2000px) and (min-width: 1401px) {
+
+            }
+
+            #loading {
+                position: fixed;
+                margin: 0 auto;
+                width: 20%;
+                z-index: 15;
+                top: 50%;
+                left: 40%;
+            }
+
+            .widget {
+                margin-bottom: 0px;
+                margin-top: 0px;
+            }
+
+            #sentiment_trend_id {
+                width: 100%;
+                height: 500px;
+            }
+        </style>
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+                <h2>Home </h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="{% url 'webinterfaceapp:home' %}">Home</a>
+                    </li>
+                    <li class="active">
+                        <a href="{% url 'webinterfaceapp:google_search_trend' %}"><strong>Google Search
+                            Trend</strong></a>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-sm-8">
+
+            </div>
+        </div>
+
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+
+            {#  Start :: Top Row containing search text box and positive negative neutral hit count#}
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Principal Component Analysis Service</h5>
+
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config 1</a>
+                                    </li>
+                                    <li><a href="#">Config 2</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <form method="post" action="{% url 'webinterfaceapp:google_search_trend' %}">
+                                        {% csrf_token %}
+                                        <div class="form-group row" id="twitter-selected">
+                                            <label class="col-md-2  control-label">Search using text</label>
+                                            <div class="col-md-10">
+                                                <input type="text" name="google-text" id="google-text"
+                                                       placeholder="Enter text" class="form-control"
+                                                       value="{{ result }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row pull-right">
+                                            <div class="col-md-12">
+                                                <div class="col-md-6">
+                                                    <button id="start_analysis"
+                                                            class="btn btn-primary pull-right m-t-n-xs"
+                                                            name="submit">Submit
+                                                    </button>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </form>
+
+
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+
+                        <div id="first"></div>
+
+                        <div class="ibox-content">
+
+                            <script type="text/javascript">
+
+                                var key = $('#google-text').val();
+                                googleTrendsFirst(key);
+
+                                {#$('#start_analysis').click(function () {#}
+                                {##}
+                                {##}
+                                {#    var key = $('#google-text').val();#}
+                                {#    console.log(key);#}
+                                {##}
+                                {#    $.ajax({#}
+                                {#        url: "{% url 'webinterfaceapp:google_search' %}",#}
+                                {#        type: 'GET',#}
+                                {#        dataType: 'json',#}
+                                {##}
+                                {#        success: function (data) {#}
+                                {##}
+                                {#            googleTrendsFirst(key);#}
+                                {#            googleTrendsSecond(key);#}
+                                {##}
+                                {#        }#}
+                                {#    });#}
+                                {##}
+                                {##}
+                                {# });#}
+
+                                function googleTrendsFirst(key) {
+
+
+                                    $("#first").remove();
+                                    var f = trends.embed.renderExploreWidget("GEO_MAP", {
+                                        "comparisonItem": [{
+                                            "keyword": key,
+                                            "geo": "BD",
+                                            "time": "today 12-m"
+                                        }], "category": 0, "property": ""
+                                    }, {
+                                        "exploreQuery": "geo=BD&q=bangla&date=today 12-m",
+                                        "guestPath": "https://trends.google.com:443/trends/embed/"
+                                    });
+
+                                    $("#first").append(f);
+
+
+                                }
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="ibox">
+
+
+                        <div class="ibox-content">
+
+                            <div id="second"></div>
+
+
+                            <script type="text/javascript">
+
+
+                                var key = $('#google-text').val();
+                                googleTrendsSecond(key);
+
+                                {#$('#start_analysis').click(function () {#}
+                                {##}
+                                {##}
+                                {#    var key = $('#google-text').val();#}
+                                {#    console.log(key);#}
+                                {##}
+                                {#    googleTrendsSecond(key);#}
+                                {##}
+                                {##}
+                                {##}
+                                {# });#}
+
+                                function googleTrendsSecond(key) {
+                                    $("#second").remove();
+                                    var t = trends.embed.renderExploreWidget("TIMESERIES",
+                                        {
+                                            "comparisonItem":
+                                                [{"keyword": key, "geo": "BD", "time": "today 12-m"}],
+                                            "category": 0,
+                                            "property": ""
+                                        }, {
+                                            "exploreQuery": "geo=BD&q=bangla&date=today 12-m",
+                                            "guestPath": "https://trends.google.com:443/trends/embed/"
+                                        });
+
+                                    $("#second").append(t);
+
+                                }
+                            </script>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="ibox">
+
+
+                        <div class="ibox-content">
+
+
+                            <script type="text/javascript">
+
+                                googleTrendsThird();
+
+                                function googleTrendsThird() {
+
+
+                                    trends.embed.renderTopChartsWidget("ff4e31df-19ca-4068-9375-93863bb97e95", {
+                                        "geo": "BD",
+                                        "guestPath": "https://trends.google.com:443/trends/embed/"
+                                    }, 2018);
+
+
+                                }
+                            </script>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ibox">
+
+
+                        <div class="ibox-content">
+
+
+                            <script type="text/javascript">
+
+
+                                googleTrendsFourth();
+
+                                function googleTrendsFourth() {
+
+
+                                    trends.embed.renderTopChartsWidget("b55e770a-eafd-4fa5-8f83-abadc5be658f", {
+                                        "geo": "BD",
+                                        "guestPath": "https://trends.google.com:443/trends/embed/"
+                                    }, 2018);
+
+
+                                }
+                            </script>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ibox">
+
+
+                        <div class="ibox-content">
+
+
+                            <script type="text/javascript">
+
+
+                                googleTrendsFifth();
+                                function googleTrendsFifth() {
+
+
+                                    trends.embed.renderTopChartsWidget("74635f68-2faf-40f0-8156-ce5c112dcf20", {
+                                        "geo": "BD",
+                                        "guestPath": "https://trends.google.com:443/trends/embed/"
+                                    }, 2018);
+
+
+                                }
+                            </script>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#    <script type="text/javascript">#}
+    {##}
+    {##}
+    {#        console.log(key);#}
+    {#        googleTrendsFirst(key);#}
+    {#        googleTrendsSecond(key);#}
+    {#        googleTrendsThird(key);#}
+    {##}
+    {#        $('#start_analysis').click(function () {#}
+    {##}
+    {##}
+    {#            var key = $('#google-text').val();#}
+    {#            console.log(key);#}
+    {##}
+    {#            googleTrendsSecond(key);#}
+    {#            googleTrendsThird(key);#}
+    {##}
+    {##}
+    {#        });#}
+    {#    </script>#}
+
+
+{% endblock %}

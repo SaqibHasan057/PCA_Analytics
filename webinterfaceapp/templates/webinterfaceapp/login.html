@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+{% include 'webinterfaceapp/public/CommonHeader.html' %}
+
+<body class="gray-bg" >
+
+
+{#<div style="background-size: cover;#}
+{#    /* height: 100%; */#}
+{#    background-repeat: no-repeat;#}
+{#    background-image: url(https://memegene.net/sites/default/files/wallpaper/analyst-clipart/486682/analyst-clipart-item-analysis-486682-1504047.jpg);"#}
+{#     >#}
+    <div class="middle-box text-center loginscreen animated fadeInDown" >
+        <div>
+            <div>
+                <h1 class="logo-name"><a href="{% url 'webinterfaceapp:home' %}">PCA</a></h1>
+            </div>
+            <h3>Welcome to Principal Component Analysis</h3>
+            <p>Please provide your credentials to look into dashboards</p>
+
+            {% if message is not None %}
+                <div class="alert alert-danger">
+                    <strong>Danger!</strong> {{ message }}
+                </div>
+            {% endif %}
+
+            <form class="form-horizontal" method="post" enctype="multipart/form-data" action="{% url 'webinterfaceapp:login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" name="userid" class="form-control" placeholder="Username" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control" placeholder="Password" required="">
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+
+                <a href="#"><small>Forgot password?</small></a>
+                <p class="text-muted text-center"><small>Do not have an account?</small></p>
+                <a class="btn btn-sm btn-white btn-block" href="{% url 'webinterfaceapp:register' %}">Create an account</a>
+            </form>
+
+
+            <p class="m-t"> <small>Powered By BUET. All rights reserved &copy; 2019</small> </p>
+        </div>
+    </div>
+{#</div>#}
+    {% include 'webinterfaceapp/public/CommonFooter.html' %}
+
+    <!-- Mainly scripts -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+
+</html>

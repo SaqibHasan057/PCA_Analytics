@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+{% include 'webinterfaceapp/public/CommonHeader.html' %}
+
+
+<body class="md-skin">
+    <div id="wrapper">
+        {% include 'webinterfaceapp/public/LeftNavigationPanel.html' %}
+
+        {% block main_content %}
+
+        {% endblock %}
+
+        {% include 'webinterfaceapp/public/RightNavigationPanel.html' %}
+    </div>
+
+
+</body>
+</html>
